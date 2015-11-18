@@ -1,4 +1,5 @@
 from django.contrib import auth
+from django.core.signing import b64_encode
 from django.test import TestCase
 
 from nap_token import get_auth_token
@@ -43,3 +44,16 @@ class TokenTest(TestCase):
         resp = self.client.get('/admin/', HTTP_X_AUTH_TOKEN=t)
         self.assertEqual(resp.status_code, 200)
 
+    def test_bogus(self):
+        t = b64_encode(b'random')
+
+        resp = self.client.get('/admin/', HTTP_X_AUTH_TOKEN=t)
+        self.assertRedirects(resp, '/admin/login/?next=/admin/')
+
+    def test_expired(self):
+        u = auth.authenticate(**CREDENTIALS)
+        t = get_auth_token(u)
+
+        with self.settings(SESSION_COOKIE_AGE=0):
+            resp = self.client.get('/admin/', HTTP_X_AUTH_TOKEN=t)
+        self.assertRedirects(resp, '/admin/login/?next=/admin/')
