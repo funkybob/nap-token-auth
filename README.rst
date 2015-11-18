@@ -3,6 +3,15 @@ Nap Token Auth
 
 Simple Token-based authentication.
 
+Overview
+--------
+
+A lot of people talk about having Token Auth for their REST APIs... but what does it actually mean?  And what benefit is it?
+
+The token is cryptographically signed chunk of data.  In this case it contains the user ID, backend, and a timestamp of when it was issued.
+
+This lets you generate and issue tokens to phone apps, services, etc, and not have to deal with logins, passwords, CSRF, etc.
+
 Install
 -------
 
