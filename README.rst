@@ -6,22 +6,23 @@ Simple Token-based authentication.
 Install
 -------
 
-Add to settings.MIDDLEWARE_CLASSES:
+Add to settings.MIDDLEWARE_CLASSES, after the default authentication
+middleware:
 
 .. code-block:: python
    :emphasize-lines: 7
 
-    MIDDLEWARE_CLASSES = (
-        'django.contrib.sessions.middleware.SessionMiddleware',
-        'django.middleware.common.CommonMiddleware',
-        'django.middleware.csrf.CsrfViewMiddleware',
-        'django.contrib.auth.middleware.AuthenticationMiddleware',
-        'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-        'nap_token.middleware.NapTokenMiddleware',
-        'django.contrib.messages.middleware.MessageMiddleware',
-        'django.middleware.clickjacking.XFrameOptionsMiddleware',
-        'django.middleware.security.SecurityMiddleware',
-    )
+   MIDDLEWARE_CLASSES = (
+      'django.contrib.sessions.middleware.SessionMiddleware',
+      'django.middleware.common.CommonMiddleware',
+      'django.middleware.csrf.CsrfViewMiddleware',
+      'django.contrib.auth.middleware.AuthenticationMiddleware',
+      'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+      'nap_token.middleware.NapTokenMiddleware',
+      'django.contrib.messages.middleware.MessageMiddleware',
+      'django.middleware.clickjacking.XFrameOptionsMiddleware',
+      'django.middleware.security.SecurityMiddleware',
+   )
 
 Usage
 -----
