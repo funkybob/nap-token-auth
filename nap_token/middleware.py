@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib.auth import load_backend
-from django.contrib.autu.models import AnonymousUser
+from django.contrib.auth.models import AnonymousUser
 from django.core import signing
 from django.utils.functional import SimpleLazyObject
 
@@ -26,4 +26,5 @@ class NapTokenMiddleware(object):
 
     def process_request(self, request):
         token = request.META.get('HTTP_X_AUTH_TOKEN')
-        request.user = SimpleLazyObject(lambda: get_user(token, getattr(request, 'user')))
+        original_user = getattr(request, 'user')
+        request.user = SimpleLazyObject(lambda: get_user(token, original_user))
