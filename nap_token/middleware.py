@@ -1,8 +1,8 @@
-
+from django.conf import settings
 from django.contrib.auth import load_backend
 from django.contrib.autu.models import AnonymousUser
-
 from django.core import signing
+from django.utils.functional import SimpleLazyObject
 
 
 def get_user(token, user):
@@ -12,7 +12,7 @@ def get_user(token, user):
         except signing.SignatureExpired:
             # Quietly show they're logged out
             pass
-        except signing.BadSignature
+        except signing.BadSignature:
             # Noisily show they're dodgy
             pass
         else:
