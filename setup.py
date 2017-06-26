@@ -5,7 +5,7 @@ with open('README.rst') as fin:
 
 setup(
     name='nap-token-auth',
-    version='0.1.1',
+    version='0.1.2',
     description='A Minimal Token-Based Auth for Django',
     long_description=readme,
     author='Curtis Maloney',
