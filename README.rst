@@ -40,6 +40,6 @@ When you want to log in a user, call `nap_token.get_auth_token(user)`, passing
 a User instance returned from `django.contrib.auth.authenticate`.
 
 It will return a signed, timestamped token.  The client need only pass this in
-a ``X-Auth-Token`` header for the request to act as that user.  If the token is
-absent, expired, or invalid, `requset.user` will fall back to the normal
-Session Based Auth.
+a ``Authorization`` header, formatted as 'Bearer {token}', for the request to
+act as that user.  If the token is absent, expired, or invalid, `requset.user`
+will fall back to the normal Session Based Auth.

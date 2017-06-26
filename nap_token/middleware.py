@@ -25,6 +25,9 @@ def get_user(token, user):
 class NapTokenMiddleware(object):
 
     def process_request(self, request):
-        token = request.META.get('HTTP_X_AUTH_TOKEN')
+        token = request.META.get('HTTP_AUTHORIZE', '')
+        if not token.startswith('Bearer '):
+            return
+        token = token.split(' ', 1)[1].strip()
         original_user = getattr(request, 'user')
         request.user = SimpleLazyObject(lambda: get_user(token, original_user))
