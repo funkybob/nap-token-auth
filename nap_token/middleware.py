@@ -22,12 +22,14 @@ def get_user(token, user):
     return user or AnonymousUser()
 
 
-class NapTokenMiddleware(object):
+class NapTokenMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
 
-    def process_request(self, request):
+    def __call__(self, request):
         token = request.META.get('HTTP_AUTHORIZE', '')
-        if not token.startswith('Bearer '):
-            return
-        token = token.split(' ', 1)[1].strip()
-        original_user = getattr(request, 'user')
-        request.user = SimpleLazyObject(lambda: get_user(token, original_user))
+        if token.startswith('Bearer '):
+            token = token.split(' ', 1)[1].strip()
+            original_user = getattr(request, 'user')
+            request.user = SimpleLazyObject(lambda: get_user(token, original_user))
+        return self.get_response(request)
