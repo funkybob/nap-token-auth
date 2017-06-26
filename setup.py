@@ -25,9 +25,9 @@ setup(
         # 'Programming Language :: Python :: Implementation :: PyPy',
     ],
     requires = [
-        'Django (>=1.8)',
+        'Django (>=1.10)',
     ],
     install_requires = [
-        'Django>=1.8',
+        'Django>=1.10',
     ],
 )
