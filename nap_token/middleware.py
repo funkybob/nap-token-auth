@@ -27,7 +27,7 @@ class NapTokenMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        token = request.META.get('HTTP_AUTHORIZE', '')
+        token = request.META.get('HTTP_AUTHORIZATION', '')
         if token.startswith('Bearer '):
             token = token.split(' ', 1)[1].strip()
             original_user = getattr(request, 'user')

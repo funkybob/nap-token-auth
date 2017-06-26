@@ -32,7 +32,7 @@ class TokenTest(TestCase):
         u = auth.authenticate(**CREDENTIALS)
         t = get_auth_token(u)
 
-        resp = self.client.get('/admin/', HTTP_AUTHORIZE='Bearer ' + t)
+        resp = self.client.get('/admin/', HTTP_AUTHORIZATION='Bearer ' + t)
         self.assertEqual(resp.status_code, 200)
 
     def test_both_auth(self):
@@ -41,13 +41,13 @@ class TokenTest(TestCase):
         u = auth.authenticate(**CREDENTIALS)
         t = get_auth_token(u)
 
-        resp = self.client.get('/admin/', HTTP_AUTHORIZE='Bearer ' + t)
+        resp = self.client.get('/admin/', HTTP_AUTHORIZATION='Bearer ' + t)
         self.assertEqual(resp.status_code, 200)
 
     def test_bogus(self):
         t = b64_encode(b'random').decode('utf-8')
 
-        resp = self.client.get('/admin/', HTTP_AUTHORIZE='Bearer ' + t)
+        resp = self.client.get('/admin/', HTTP_AUTHORIZATION='Bearer ' + t)
         self.assertRedirects(resp, '/admin/login/?next=/admin/')
 
     def test_expired(self):
@@ -55,5 +55,5 @@ class TokenTest(TestCase):
         t = get_auth_token(u)
 
         with self.settings(SESSION_COOKIE_AGE=0):
-            resp = self.client.get('/admin/', HTTP_AUTHORIZE='Bearer ' + t)
+            resp = self.client.get('/admin/', HTTP_AUTHORIZATION='Bearer ' + t)
         self.assertRedirects(resp, '/admin/login/?next=/admin/')
