@@ -43,3 +43,24 @@ It will return a signed, timestamped token.  The client need only pass this in
 a ``Authorization`` header, formatted as 'Bearer {token}', for the request to
 act as that user.  If the token is absent, expired, or invalid, `requset.user`
 will fall back to the normal Session Based Auth.
+
+
+Issuing Tokens
+--------------
+
+As a quick and dirty example of how to issue tokens, here's an approach that
+will issue a token for a user who can log in:
+
+.. code-block:: python
+
+    from django.http import HttpResponse
+    from django.contrib.auth.views import LoginView
+
+    from nap_token import get_auth_token
+
+    class TokenView(LoginView):
+
+        def form_valid(self, form):
+            user = form.get_user()
+            return HttpResponse(get_auth_token(user))
+
